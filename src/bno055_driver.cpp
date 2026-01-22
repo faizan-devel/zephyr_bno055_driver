@@ -33,15 +33,20 @@ constexpr int READ_SENSOR_INTERVAL                         = 50;
 // ---------------------------------------------------------
 BNO055Driver::BNO055Driver(const struct device *i2c_dev)
     : i2c(i2c_dev),
+
       sleep_ms(0),
       is_calibrated(false),
+      timestamp_ms(0),
+
+      temp(0),
+
       yaw(0), pitch(0), roll(0),
       quat_w(0), quat_x(0), quat_y(0), quat_z(0),
       lin_accel_x(0), lin_accel_y(0), lin_accel_z(0),
       gravity_x(0), gravity_y(0), gravity_z(0),
-      temp(0),
-      timestamp_ms(0),
-      state(BNOState::READ_DEVICE_ID) {}
+
+      state(BNOState::READ_DEVICE_ID)
+{}
 
 
 // ---------------------------------------------------------

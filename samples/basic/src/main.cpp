@@ -2,21 +2,23 @@
 #include <zephyr/device.h>
 #include <zephyr/sys/printk.h>
 #include <math.h>
+
 #include "bno055_driver.hpp"
 
 #define I2C_NODE DT_NODELABEL(i2c0)
-const struct device *i2c_dev = DEVICE_DT_GET(I2C_NODE);
 
-BNO055Driver bno(i2c_dev);
+static const struct device *i2c_dev = DEVICE_DT_GET(I2C_NODE);
+static BNO055Driver bno(i2c_dev);
 
-void main(void)
+int main(void)
 {
     if (!device_is_ready(i2c_dev)) {
         printk("I2C device not ready!\n");
-        return;
+        return 0;
     }
 
     printk("Starting BNO055 driver...\n");
+
     bno.start();
 
     while (true) {
@@ -41,13 +43,23 @@ void main(void)
 
         float temp = bno.getTemp();
 
-        printk("Euler   => Y: %.2f°, P: %.2f°, R: %.2f°\n", yaw, pitch, roll);
-        printk("LinAcc  => X: %.2f, Y: %.2f, Z: %.2f (m/s²)\n", lin_x, lin_y, lin_z);
-        printk("Gravity => X: %.2f, Y: %.2f, Z: %.2f (m/s²)\n", gx, gy, gz);
-        printk("Quat    => W: %.4f, X: %.4f, Y: %.4f, Z: %.4f\n", qw, qx, qy, qz);
-        printk("Temp    => %.2f °C\n\n", temp);
+        printk("Euler   => Y: %.2f°, P: %.2f°, R: %.2f°\n",
+               (double)yaw, (double)pitch, (double)roll);
+
+        printk("LinAcc  => X: %.2f, Y: %.2f, Z: %.2f (m/s²)\n",
+               (double)lin_x, (double)lin_y, (double)lin_z);
+
+        printk("Gravity => X: %.2f, Y: %.2f, Z: %.2f (m/s²)\n",
+               (double)gx, (double)gy, (double)gz);
+
+        printk("Quat    => W: %.4f, X: %.4f, Y: %.4f, Z: %.4f\n",
+               (double)qw, (double)qx, (double)qy, (double)qz);
+
+        printk("Temp    => %.2f °C\n\n", (double)temp);
 
         k_msleep(50);
     }
+
+    return 0;
 }
 
