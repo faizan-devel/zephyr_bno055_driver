@@ -1,3 +1,5 @@
 name: bno055_driver
 build:
   cmake: .
+  kconfig: Kconfig
+

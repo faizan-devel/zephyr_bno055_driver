@@ -1,0 +1,6 @@
+menuconfig BNO055_DRIVER
+    bool "BNO055 IMU driver"
+    default y
+    help
+      Bosch BNO055 IMU driver.
+
