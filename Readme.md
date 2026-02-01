@@ -7,6 +7,8 @@ This driver uses a **finite state machine (FSM)** over I²C to initialize and re
 Tested with:
 - Zephyr RTOS v4.3+
 - ESP32 (`esp_wrover_kit`)
+- Teensy 4.1
+- STM32 Nucleo-H7A3ZI-Q
 
 ---
 
